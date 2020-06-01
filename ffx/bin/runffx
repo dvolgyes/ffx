@@ -195,11 +195,11 @@ def read(filename, dim=None, **kwargs):
         dialect = csv.Sniffer().sniff(f.read(1024))
     # fix for single-column data, because sniff treats 3.1E09 as 2 fields w/ delim 'E'
     delimiter = ' ' if 'E' in dialect.delimiter else dialect.delimiter
-    
+
     data = numpy.loadtxt(filename, delimiter=delimiter, **kwargs)
     if dim == 1:
         assert data.shape[0] == data.size, 'file %s must be 1-dimensional' % f
-    if dim == 2:
+    elif dim == 2:
         assert len(data.shape) == 2, 'file %s must be 2-dimensional' % f
     return data
 
